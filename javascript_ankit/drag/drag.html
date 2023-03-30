@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+ #mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: center;
+}
+
+#mydivheader {
+  position: absolute;
+
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
+}
+    </style>
+</head>
+<body>
+    <div id="mydiv">
+        <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+        <div id="mydivheader" class="drag">Click here to move</div>
+        <p>Move</p>
+        <p>this</p>
+        <p>DIV</p>
+      </div>
+</body>
+<script>
+    drag(document.getElementById("mydivheader"));
+
+function drag(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  
+    elmnt.onmousedown = mousedown;
+ 
+        function mousedown(e){
+            e = e || window.event;
+            e.preventDefault();
+            pos3=e.clientX;
+            pos4=e.clientY;
+            document.onmouseup=closedrag;
+            document.onmousemove=elementDrag;
+        }
+        
+        function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+        function closedrag(){
+            document.onmouseup=null;
+            document.onmousemove=null;
+    }
+}
+</script>
+</html>
